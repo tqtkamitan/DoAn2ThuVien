@@ -1,0 +1,81 @@
+﻿@model WebDoAn2.Models.Book
+@{
+    ViewBag.Title = "ViewBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mx-auto w-50">
+    <div class="card">
+        <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+            Thông tin sách
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div>
+                        <img alt="@Model.bookName" src="@Model.img" style="width: 300px; height: 450px;" />
+                    </div>
+                </div>
+                <div class="col-md-12 row text-center">
+                    <div class="col-md-4">
+                        Tên sách:
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.bookName)
+                    </div>
+                    <div class="col-md-4">
+                        Ngày thêm:
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.dateAdded)
+                    </div>
+                    <div class="col-md-4">
+                        Tác giả:
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.author)
+                    </div>
+                    <div class="col-md-4">
+                        Thể loại:
+                    </div>
+                    <div class="col-md-8">
+                        @if (ViewBag.BookCaterogy != null)
+                        {
+                            foreach (var bookCaterogy in ViewBag.BookCaterogy)
+                            {
+                                if (ViewBag.BookCaterogy != null)
+                                {
+                                    foreach (var caterogy in ViewBag.Caterogy)
+                                    {
+                                        if (bookCaterogy.idBook == Model.idBook)
+                                        {
+                                            if (bookCaterogy.idCaterogy == caterogy.idCaterogy)
+                                            {
+                                            @bookCaterogy.caterogy @(", ")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    </div>
+                    <div class="col-md-4">
+                        Tình trạng:
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.status)
+                    </div>
+                    <div class="col-md-4">
+                        Mô tả:
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(model => model.description)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

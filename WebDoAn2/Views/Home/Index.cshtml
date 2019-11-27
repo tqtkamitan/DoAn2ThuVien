@@ -3,46 +3,45 @@
 }
 
 <!doctype html>
-<html lang="en">
-<head>
- 
-</head>
-<body>
+
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <img id="board" src="~/Img/board.png"/>
+        <div class="col-md-12 flexslider">
+            <ul class="slides">
+                <li>
+                    <img src="~/Img/board.png" />
+                </li>
+                <li>
+                    <img src="~/Img/board.png" />
+                </li>
+                <li>
+                    <img src="~/Img/board.png" />
+                </li>
+            </ul>
         </div>
         <div class="col-md-8 p-3">
             <div class="card">
                 <div class="card-header">
                     Giới thiệu
                 </div>
-                <div class="card-body row">
-                    <div class="card col-md-4">
-                        <a href="#">
-                            <img src="~/Img/book1.jpg" class="card-img-top book-img" alt="...">
-                            <div class="card-body">
-                                <p class="card-text">Tên sách</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card col-md-4">
-                        <a href="#">
-                            <img src="~/Img/book2.jpg" class="card-img-top book-img" alt="...">
-                            <div class="card-body">
-                                <p class="card-text">Tên sách</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card col-md-4">
-                        <a href="#">
-                            <img src="~/Img/book3.jpg" class="card-img-top book-img" alt="...">
-                            <div class="card-body">
-                                <p class="card-text">Tên sách</p>
-                            </div>
-                        </a>
-                    </div>
+                <div class="card-body flexslider2 carousel">
+                    @if (ViewBag.Book != null)
+                    {
+                        foreach (var item in ViewBag.Book)
+                        {
+                            <ul class="slides">
+                                <li>
+                                    <a href="~/Home/ViewBook/@item.idBook" class="">
+                                        <img src="@item.img" class="card-img-top book-img" alt="...">
+                                        <div class="card-body text-center">
+                                            <p class="card-text">@item.bookName</p>
+                                            <p class="card-text">Tác giả: @item.author</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                    }
                 </div>
             </div>
             <div class="card">
@@ -84,8 +83,22 @@
                         Thông tin thư viện
                     </div>
                     <div class="card-body row">
-                        <div class="col-md-12">Số lượng sách: </div>
-                        <div class="col-md-12">Số lượng tác giả: </div>
+                        @if (ViewBag.CountBook != 0)
+                        {
+                            <div class="col-md-12">Số lượng sách: @ViewBag.CountBook </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-12">Hiện không có sách trong thư viện</div>
+                        }
+                        @if (ViewBag.CountAuthor != 0)
+                        {
+                            <div class="col-md-12">Số lượng tác giả: @ViewBag.CountAuthor </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-12">Hiện không có tác giả nào</div>
+                        }
                         <div class="col-md-12">Số sách đang cho mượn: </div>
                         <div class="col-md-12">Số sách đã được in ấn lại:</div>
                     </div>
@@ -94,7 +107,22 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            pausePlay: true,
+            slideshowSpeed: 3000,
+        });
 
-  
-</body>
-</html>
+        $('.flexslider2').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            itemWidth: 210,
+            itemMargin: 5,
+            pauseOnHover: true,
+            mousewheel: true,
+        });
+    });
+</script>

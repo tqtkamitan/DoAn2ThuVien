@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "EditBook";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container mx-auto w-50">
+    <div class="card">
+        <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+            Thêm mới sản phẩm
+        </div>
+        <div class="card-body">
+            @if (ViewBag.Noti != null)
+            {
+                @Html.Raw(ViewBag.Noti)
+            }
+            <form action="~/Admin/EditBook/@ViewBag.BookId" method="post" class="form-inline" enctype="multipart/form-data">
+                <div class="form-group w-100">
+                    <label for="exampleInputEmail1" class="col-md-12">Sách</label>
+                    <input value="@ViewBag.Book.bookName" type="text" class="form-control col-md-12" id="" name="bookName" aria-describedby="emailHelp" placeholder="Enter your product name here.">
+                    <small id="emailHelp" class="form-text text-muted col-md-12">Viết Tên Sách</small>
+
+                    <label for="exampleInputEmail1" class="col-md-12" style="margin-top:20px">Diễn tả sách</label>
+                    <textarea type="text" class="form-control col-md-12" id="" name="description" aria-describedby="emailHelp">@ViewBag.Book.description</textarea>
+
+                    <label for="exampleInputEmail1" class="col-md-12" style="margin-top:20px">Tác giả</label>
+                    <select type="text" class="form-control col-md-12" id="" name="author">
+                        @if (ViewBag.Author != null)
+                        {
+                            foreach (var item in ViewBag.Author)
+                            {
+                                if (ViewBag.Book.author == item.author)
+                                {
+                                    <option selected value="@item.author">@item.author</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.author">@item.author</option>
+                                }
+                            }
+                        }
+                    </select>
+
+                    <label for="exampleInputEmail1" class="col-md-12" style="margin-top:20px">Thể loại</label>
+                    <select type="text" class="form-control col-md-12 selectpicker" multiple id="" name="caterogy" data-live-search="true">
+                        @if (ViewBag.Caterory != null)
+                        {
+                            foreach (var item in ViewBag.Caterory)
+                            {
+                                bool hadupdated = false;
+                                if (ViewBag.BookCaterogy != null)
+                                {
+                                    foreach (var bookCaterogy in ViewBag.BookCaterogy)
+                                    {
+                                        if (bookCaterogy.idBook == ViewBag.Book.idBook)
+                                        {
+                                            if (bookCaterogy.idCaterogy == item.idCaterogy)
+                                            {
+                                                hadupdated = true;
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                hadupdated = false;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (hadupdated == false)
+                                {
+                                    <option value="@item.idCaterogy">@item.caterogy</option>
+                                }
+                                else
+                                {
+                                    <option selected value="@item.idCaterogy">@item.caterogy</option>
+                                }
+                            }
+                        }
+                    </select>
+
+                    <label for="exampleInputEmail1" class="col-md-12" style="margin-top:20px">Ngày nhập</label>
+                    <input value="@ViewBag.Book.dateAdded" type="date" class="form-control col-md-12" id="date_input" name="dateAdded" aria-describedby="emailHelp">
+
+                    <label for="exampleInputEmail1" class="col-md-12" style="margin-top:20px">Tình trạng hàng</label>
+                    <select type="text" class="form-control col-md-12" id="" name="status">
+                        <option>Còn sách</option>
+                        <option>Hết sách</option>
+                        <option>Liên hệ thêm</option>
+                        <option>Không cho mượn</option>
+                    </select>
+
+                    <label for="exampleInputEmail1" class="col-md-12" style="margin-top:20px">Hình ảnh cho sách</label>
+                    <input type="file" class="form-control col-md-12" id="" name="img" aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-text text-muted col-md-12">Để trống  là sẽ lấy hình ảnh cũ</small>
+
+                    <div class="col-md-12 d-flex justify-content-center" style="margin-top:20px">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="#" class="btn btn-outline-primary" style="margin-left:10px">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var day = now.getDate();
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+        var today = now.getFullYear() + '-' + month + '-' + day;
+        $("#date_input").val(today);
+    });
+
+    $('select').selectpicker();
+</script>
+

@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace WebDoAn2.Models
+{
+    public class AccountAction
+    {
+        public static void Create(string name, string phoneNumber, string address, string email, string password, string img)
+        {
+            using (var db = new DataContext())
+            {
+                db.Accounts.Add(new Account
+                {
+                    name = name,
+                    phoneNumber = phoneNumber,
+                    address = address,
+                    email = email,
+                    password = password,
+                    img = img,
+                    role = "Khách hàng",
+                    status = "Active",
+                });
+                db.SaveChanges();
+                db.Dispose();
+            }
+        }
+
+        public static List<Account> GetAll()
+        {
+            List<Account> list_acc = null;
+            using (var db = new DataContext())
+            {
+                list_acc = db.Accounts.ToList();
+                db.Dispose();
+            }
+            return list_acc;
+        }
+
+        public static List<Account> GetAllEmployee()
+        {
+            List<Account> list_acc = null;
+            using (var db = new DataContext())
+            {
+                var links = from l in db.Accounts // lấy toàn bộ liên kết
+                            where l.role.Contains("Nhân viên")
+                            select l;
+                list_acc = links.ToList();
+                db.Dispose();
+            }
+            return list_acc;
+        }
+    }
+}

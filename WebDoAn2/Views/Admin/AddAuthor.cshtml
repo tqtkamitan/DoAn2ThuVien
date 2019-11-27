@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "AddAuthor";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container mx-auto w-50">
+    <div class="card">
+        <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+            Thêm mới tác giả
+        </div>
+        <div class="card-body">
+            @if (ViewBag.Noti != null)
+            {
+                @Html.Raw(ViewBag.Noti)
+            }
+            <form action="~/Admin/AddAuthor" method="post" class="form-inline">
+                <div class="form-group w-100">
+                    <label for="exampleInputEmail1" class="col-md-12">Tác giả</label>
+                    <input type="text" class="form-control col-md-12" id="" name="author" aria-describedby="emailHelp" placeholder="Enter the author here.">
+                    <small id="emailHelp" class="form-text text-muted col-md-12">Tên hoặc biệt hiệu tác giả</small>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="#" class="btn btn-outline-primary" style="margin-left:10px">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

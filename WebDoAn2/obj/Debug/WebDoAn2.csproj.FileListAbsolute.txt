@@ -91,3 +91,7 @@ C:\Users\ACER\Desktop\WebDoAn2\WebDoAn2\obj\Debug\WebDoAn2.csproj.CoreCompileInp
 C:\Users\ACER\Desktop\WebDoAn2\WebDoAn2\obj\Debug\WebDoAn2.csproj.CopyComplete
 C:\Users\ACER\Desktop\WebDoAn2\WebDoAn2\obj\Debug\WebDoAn2.dll
 C:\Users\ACER\Desktop\WebDoAn2\WebDoAn2\obj\Debug\WebDoAn2.pdb
+C:\Users\ACER\Desktop\WebDoAn2\WebDoAn2\bin\EntityFramework.dll
+C:\Users\ACER\Desktop\WebDoAn2\WebDoAn2\bin\EntityFramework.SqlServer.dll
+C:\Users\ACER\Desktop\WebDoAn2\WebDoAn2\bin\EntityFramework.xml
+C:\Users\ACER\Desktop\WebDoAn2\WebDoAn2\bin\EntityFramework.SqlServer.xml
