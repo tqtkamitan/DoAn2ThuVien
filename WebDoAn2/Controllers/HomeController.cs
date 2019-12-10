@@ -15,10 +15,17 @@ namespace WebDoAn2.Controllers
 
         public ActionResult Index()
         {
+            if (TempData["Alert"] != null)
+            {
+                ViewBag.Alert = TempData["Alert"].ToString();
+            }
             ViewBag.Account = AccountAction.GetAll();
-            ViewBag.Book = BookAction.GetAll();
             ViewBag.CountBook = BookAction.CountBook();
+            ViewBag.Caterogy = CaterogyAction.GetAll();
             ViewBag.CountAuthor = AuthorAction.CountAuthor();
+            var randomBooks = db.Books.OrderBy(x => Guid.NewGuid()).Take(6);
+            ViewBag.Book = randomBooks;
+            ViewBag.BookNew = BookAction.GetAll();
             return View();
         }
 
@@ -34,9 +41,20 @@ namespace WebDoAn2.Controllers
         public ActionResult CaterogiesList()
         {
             ViewBag.Account = AccountAction.GetAll();
+            ViewBag.Caterogy = CaterogyAction.GetAll();
+            return View();
+        }
+
+        public ActionResult CaterogyBook(int id)
+        {
+            var links = from l in db.Book_Caterogies // lấy toàn bộ liên kết
+                        where l.idCaterogy.Equals(id)
+                        select l;
+            ViewBag.Account = AccountAction.GetAll();
             ViewBag.Book = BookAction.GetAll();
             ViewBag.BookCaterogy = Book_CaterogyAction.GetAll();
             ViewBag.Caterogy = CaterogyAction.GetAll();
+            ViewBag.caterogyId = links;
             return View();
         }
 
@@ -64,6 +82,8 @@ namespace WebDoAn2.Controllers
             ViewBag.Book = BookAction.GetAll();
             ViewBag.BookCaterogy = Book_CaterogyAction.GetAll();
             ViewBag.Caterogy = CaterogyAction.GetAll();
+            var randomBooks = db.Books.OrderBy(x => Guid.NewGuid()).Take(6);
+            ViewBag.randomBooks = randomBooks;
             var book = db.Books.Find(id);
             if (book == null)
             {

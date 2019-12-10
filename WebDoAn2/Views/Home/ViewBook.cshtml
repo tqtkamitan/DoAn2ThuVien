@@ -4,74 +4,106 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mx-auto w-50">
-    <div class="card">
-        <div class="card-header bg-primary text-light text-center" style="font-size:25px">
-            Thông tin sách
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-12 d-flex justify-content-center">
-                    <div>
-                        <img alt="@Model.bookName" src="@Model.img" style="width: 300px; height: 450px;" />
-                    </div>
+<div class="container mx-auto">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+                    Thông tin sách
                 </div>
-                <div class="col-md-12 row text-center">
-                    <div class="col-md-4">
-                        Tên sách:
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.bookName)
-                    </div>
-                    <div class="col-md-4">
-                        Ngày thêm:
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.dateAdded)
-                    </div>
-                    <div class="col-md-4">
-                        Tác giả:
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.author)
-                    </div>
-                    <div class="col-md-4">
-                        Thể loại:
-                    </div>
-                    <div class="col-md-8">
-                        @if (ViewBag.BookCaterogy != null)
-                        {
-                            foreach (var bookCaterogy in ViewBag.BookCaterogy)
-                            {
-                                if (ViewBag.BookCaterogy != null)
-                                {
-                                    foreach (var caterogy in ViewBag.Caterogy)
+                    <div class="row no-gutters">
+                        <div class="col-md-5 p-1">
+                                <img alt="@Model.bookName" class="card-img" src="@Model.img" style="width: 270px; height: 300px;" />
+                        </div>
+                        <div class="col-md-7 row">
+                            <div class="card-body">
+                                <p class="card-text">Tên sách:  @Html.DisplayFor(model => model.bookName)</p>
+                                <p class="card-text">Ngày thêm:  @Html.DisplayFor(model => model.dateAdded)</p>
+                                <p class="card-text">Tác giả:  @Html.DisplayFor(model => model.author)</p>
+                                <p class="card-text">
+                                    Thể loại:  @if (ViewBag.BookCaterogy != null)
                                     {
-                                        if (bookCaterogy.idBook == Model.idBook)
+                                        foreach (var bookCaterogy in ViewBag.BookCaterogy)
                                         {
-                                            if (bookCaterogy.idCaterogy == caterogy.idCaterogy)
+                                            if (ViewBag.BookCaterogy != null)
                                             {
-                                            @bookCaterogy.caterogy @(", ")
+                                                foreach (var caterogy in ViewBag.Caterogy)
+                                                {
+                                                    if (bookCaterogy.idBook == Model.idBook)
+                                                    {
+                                                        if (bookCaterogy.idCaterogy == caterogy.idCaterogy)
+                                                        {
+                                                            @bookCaterogy.caterogy @(", ")
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            }
-                        }
-                    </div>
-                    <div class="col-md-4">
-                        Tình trạng:
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.status)
-                    </div>
-                    <div class="col-md-4">
-                        Mô tả:
-                    </div>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.description)
+                                </p>
+                                <p class="card-text">Tình trạng: @Html.DisplayFor(model => model.status)</p>
+                                <p class="card-text">Mô tả: @Html.DisplayFor(model => model.description)</p>
+                            </div>
+                        </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 text-center" id="button"><a href="@Url.Action("AddToBorrowList", "BorrowBook", new { sanPhamID = Url.RequestContext.RouteData.Values["id"] })"> <i class="material-icons">menu_book</i>Mượn sách</a></div>
+                        <div class="col-md-3 text-center" id="button"><a href="~/ReadOnline/Index/@Model.idBook"> <i class="material-icons">library_books</i>Đọc Online</a></div>
+                        <div class="col-md-3"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+                    Giới thiệu cho bạn
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Book != null)
+                    {
+                        <ul style="list-style: none;">
+                            @foreach (var item in ViewBag.Book)
+                            {
+                                <li>
+                                    <a href="~/Home/ViewBook/@item.idBook" class="row">
+                                        <img src="@item.img" class="col-md-5 p-1" alt="...">
+                                        <div class="col-md-7 text-center">
+                                            <p class="card-text">@item.bookName</p>
+                                            <p class="card-text">Tác giả: @item.author</p>
+                                            <p class="card-text">
+                                                Thể loại:  @if (ViewBag.BookCaterogy != null)
+                                                {
+                                                    foreach (var bookCaterogy in ViewBag.BookCaterogy)
+                                                    {
+                                                        if (ViewBag.BookCaterogy != null)
+                                                        {
+                                                            foreach (var caterogy in ViewBag.Caterogy)
+                                                            {
+                                                                if (bookCaterogy.idBook == Model.idBook)
+                                                                {
+                                                                    if (bookCaterogy.idCaterogy == caterogy.idCaterogy)
+                                                                    {
+                                                                        @bookCaterogy.caterogy @(", ")
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+                <div class="card-footer text-center">
+                    <a href="~/Home/BookList">Xem Thêm</a>
+</div>
             </div>
         </div>
     </div>

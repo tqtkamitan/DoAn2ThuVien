@@ -4,6 +4,17 @@
 
 <!doctype html>
 
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <script>
+        $(document).ready(function () {
+            $('.alert').alert()
+        })
+    </script>
+}
+    <div class="alert alert-warning text-center" role="alert">
+        <h3>@ViewBag.Alert</h3>
+    </div>
 <div class="container">
     <div class="row">
         <div class="col-md-12 flexslider">
@@ -21,15 +32,15 @@
         </div>
         <div class="col-md-8 p-3">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header text-white bg-dark">
                     Giới thiệu
                 </div>
                 <div class="card-body flexslider2 carousel">
                     @if (ViewBag.Book != null)
                     {
-                        foreach (var item in ViewBag.Book)
-                        {
-                            <ul class="slides">
+                        <ul class="slides">
+                            @foreach (var item in ViewBag.Book)
+                            {
                                 <li>
                                     <a href="~/Home/ViewBook/@item.idBook" class="">
                                         <img src="@item.img" class="card-img-top book-img" alt="...">
@@ -39,69 +50,96 @@
                                         </div>
                                     </a>
                                 </li>
-                            </ul>
-                        }
+                            }
+                        </ul>
                     }
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
+            <div class="card" style="margin-top:50px">
+                <div class="card-header text-white bg-dark ">
                     Mới nhất
                 </div>
-                <div class="card-body row">
-                    <div class="card col-md-4">
-                        <a href="#">
-                            <img src="~/Img/book1.jpg" class="card-img-top book-img" alt="...">
-                            <div class="card-body">
-                                <p class="card-text">Tên sách</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card col-md-4">
-                        <a href="#">
-                            <img src="~/Img/book2.jpg" class="card-img-top book-img" alt="...">
-                            <div class="card-body">
-                                <p class="card-text">Tên sách</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card col-md-4">
-                        <a href="#">
-                            <img src="~/Img/book3.jpg" class="card-img-top book-img" alt="...">
-                            <div class="card-body">
-                                <p class="card-text">Tên sách</p>
-                            </div>
-                        </a>
-                    </div>
+                <div class="card-body flexslider3 carousel">
+                    @if (ViewBag.Book != null)
+                    {
+                        <ul class="slides">
+                            @foreach (var item in ViewBag.BookNew)
+                            {
+                                <li>
+                                    <a href="~/Home/ViewBook/@item.idBook" class="">
+                                        <img src="@item.img" class="card-img-top book-img" alt="...">
+                                        <div class="card-body text-center">
+                                            <p class="card-text">@item.bookName</p>
+                                            <p class="card-text">Tác giả: @item.author</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
                 </div>
             </div>
         </div>
         <div class="col-md-4 p-3">
-            <div class="row">
-                <div class="card">
-                    <div class="card-header">
-                        Thông tin thư viện
-                    </div>
-                    <div class="card-body row">
-                        @if (ViewBag.CountBook != 0)
-                        {
-                            <div class="col-md-12">Số lượng sách: @ViewBag.CountBook </div>
-                        }
-                        else
-                        {
-                            <div class="col-md-12">Hiện không có sách trong thư viện</div>
-                        }
-                        @if (ViewBag.CountAuthor != 0)
-                        {
-                            <div class="col-md-12">Số lượng tác giả: @ViewBag.CountAuthor </div>
-                        }
-                        else
-                        {
-                            <div class="col-md-12">Hiện không có tác giả nào</div>
-                        }
-                        <div class="col-md-12">Số sách đang cho mượn: </div>
-                        <div class="col-md-12">Số sách đã được in ấn lại:</div>
-                    </div>
+            <div class="card">
+                <div class="card-header text-white bg-dark">
+                    Thông tin thư viện
+                </div>
+                <div class="card-body row">
+                    @if (ViewBag.CountBook != 0)
+                    {
+                        <div class="col-md-12">Số lượng sách: @ViewBag.CountBook </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-12">Hiện không có sách trong thư viện</div>
+                    }
+                    @if (ViewBag.CountAuthor != 0)
+                    {
+                        <div class="col-md-12">Số lượng tác giả: @ViewBag.CountAuthor </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-12">Hiện không có tác giả nào</div>
+                    }
+                    <div class="col-md-12">Số sách đang cho mượn: </div>
+                    <div class="col-md-12">Số sách đã được in ấn lại:</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-white bg-dark">
+                    Thư viện Online
+                </div>
+                <div class="card-body row">
+                    <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="#"><i class="material-icons" style="float:unset">face</i><br />Thông tin độc giả</a></span>
+                    <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="#"><i class="material-icons" style="float:unset">card_membership</i><br />Đăng ký mở thẻ</a></span>
+                    <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="#"><i class="material-icons" style="float:unset">add_comment</i><br />Yêu cầu bổ sung</a></span>
+                    <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="#"><i class="material-icons" style="float:unset">360</i><br />Gia hạn mượn sách</a></span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-white bg-dark">
+                    Tủ sách của bạn
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-12"><a href="~/Home/Contact"><i class="material-icons">headset</i>Hỗ trợ khách hàng</a></div>
+                    <div class="col-md-12">Sách đang mượn:</div>
+                    <div class="col-md-12">Sách cần trả:</div>
+                    <div class="col-md-12"><a href="~/Home/About"><i class="material-icons">live_help</i>Quy định thư viện</a></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-white bg-dark">
+                    Giờ hoạt động
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-12"><h5><i class="material-icons">access_time</i>Thứ 2 đến thứ 6</h5></div>
+                    <div class="col-md-12">Thời gian mở: 7h30</div>
+                    <div class="col-md-12">Thời gian đóng: 16h30</div>
+                    <div class="col-md-12"><h5><i class="material-icons">access_time</i>Thứ 7 và Chủ nhật</h5></div>
+                    <div class="col-md-12">Thời gian mở: 8h30</div>
+                    <div class="col-md-12">Thời gian đóng: 16h00</div>
+                    <div class="col-md-12">Không phục vụ các ngày nghỉ lễ</div>
                 </div>
             </div>
         </div>
@@ -111,14 +149,23 @@
     $(document).ready(function () {
         $('.flexslider').flexslider({
             animation: "slide",
-            animationLoop: false,
+            animationLoop: true,
             pausePlay: true,
             slideshowSpeed: 3000,
         });
 
         $('.flexslider2').flexslider({
             animation: "slide",
-            animationLoop: false,
+            animationLoop: true,
+            itemWidth: 210,
+            itemMargin: 5,
+            pauseOnHover: true,
+            mousewheel: true,
+        });
+
+        $('.flexslider3').flexslider({
+            animation: "slide",
+            animationLoop: true,
             itemWidth: 210,
             itemMargin: 5,
             pauseOnHover: true,

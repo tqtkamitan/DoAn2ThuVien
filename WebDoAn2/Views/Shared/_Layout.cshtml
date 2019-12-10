@@ -47,10 +47,14 @@
                         <i class="material-icons">view_headline</i>Thể loại
                     </a>
                     <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#"></a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="~/Home/CaterogiesList">All</a>
+                        @if (ViewBag.Caterogy != null)
+                        {
+                            foreach (var item in ViewBag.Caterogy)
+                            {
+                                <a class="dropdown-item" href="~/Home/CaterogyBook/@item.idCaterogy">@item.caterogy</a>
+                            }
+                        }
                     </div>
                 </li>
             </ul>
@@ -72,7 +76,7 @@
                     {
                     <div class="my-2 my-lg-0 nav-item dropdown border-left float-right">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-circle" src="@user.img" id="logo-header" style="border-radius: 50%;" />Xin chào @user.name
+                            <img class="img-circle" src="@user.img" id="logo-header" style="border-radius: 50%;margin-right:5px" />Xin chào @user.name
                         </a>
                         <div class="dropdown-menu " aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="~/Admin/AdminSite">Admin Site</a>

@@ -4,5 +4,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>CaterogiesList</h2>
+<div class="container">
+    <div class="row justify-content-center align-self-center">
+        <div class="card w-70 text-center">
+            <div class="card-header text-white bg-dark">
+                <h3>
+                    Danh sách các thể loại
+                </h3>
+            </div>
+            <div class="card-body justify-content-center align-self-center">
+                <table class="text-center" style="table-layout:fixed;">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.Caterogy != null)
+                        {
+                            foreach (var caterogy in ViewBag.Caterogy)
+                            {
+                                <tr>
+                                    <td><a class="text-dark" style="font-size:20px; font-weight:bold" href="~/Home/CaterogyBook/@caterogy.idCaterogy">@caterogy.caterogy</a></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 

@@ -14,6 +14,11 @@ namespace WebDoAn2.Controllers
         // GET: User
         public ActionResult Login([Bind(Include = "email, password")]Account systemUser)
         {
+            if (db.Accounts.Find("tqt.kamitan@gmail.com") == null)
+            {
+                db.Accounts.Add(new Account { email = "tqt.kamitan@gmail.com", name = "Quang Tân", password = "kirito1998", role = "Nhân viên", img = "/UploadedFiles/anonymous-profile.jpg", phoneNumber = "0984081735", status = "Active" });
+                db.SaveChanges();
+            }
             ViewBag.Account = AccountAction.GetAll();
             if (Session["user"] != null) return RedirectToAction("Index", "Home");
             string email = systemUser.email;
@@ -30,7 +35,10 @@ namespace WebDoAn2.Controllers
                     if (email.Equals(taikhoan) && password.Equals(matkhau))
                     {
                         Session.Add("user", user.email);
-                        db.SaveChanges();
+                        if (user.role == "Nhân viên")
+                        {
+                            Session.Add("staff", user.role);
+                        }
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -83,6 +91,11 @@ namespace WebDoAn2.Controllers
         }
 
         public ActionResult EmployeeList() {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Employee = AccountAction.GetAllEmployee();
             ViewBag.Account = AccountAction.GetAll();
             return View();
@@ -90,7 +103,24 @@ namespace WebDoAn2.Controllers
 
         public ActionResult AccountList()
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Account = AccountAction.GetAll();
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult EditAccount(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditAccount(int id, string name)
+        {
             return View();
         }
     }

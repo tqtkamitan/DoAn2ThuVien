@@ -13,56 +13,64 @@
             <div class="" style="margin-bottom:50px">
                 <a class="float-right btn btn-primary" href="~/Admin/AddBook">Thêm Mới</a>
             </div>
-            <table class="table text-center" style="table-layout:fixed;">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Tên sách</th>
-                        <th scope="col">Tác giả</th>
-                        <th scope="col">Thể loại</th>
-                        <th scope="col">Ngày thêm</th>
-                        <th scope="col">Tình trạng</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (ViewBag.Book != null)
-                    {
-                        foreach (var item in ViewBag.Book)
+            <div style="overflow:auto;">
+                <table class="table text-center" style="table-layout:fixed;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Tên sách</th>
+                            <th scope="col">Tác giả</th>
+                            <th scope="col">Thể loại</th>
+                            <th scope="col">Ngày thêm</th>
+                            <th scope="col">Tình trạng</th>
+                            <th scope="col">Hình</th>
+                            <th style="width:300px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.Book != null)
                         {
-                    <tr>
-                        <td>@item.idBook</td>
-                        <td>@item.bookName</td>
-                        <td>@item.author</td>
-                        <td>
-                            @if (ViewBag.BookCaterogy != null)
+                            foreach (var item in ViewBag.Book)
                             {
-                                foreach (var bookCaterogy in ViewBag.BookCaterogy)
-                                {
-                                    if (ViewBag.Caterogy != null)
-                                    {
-                                        foreach (var caterogy in ViewBag.Caterogy)
+                                <tr>
+                                    <td>@item.idBook</td>
+                                    <td>@item.bookName</td>
+                                    <td>@item.author</td>
+                                    <td>
+                                        @if (ViewBag.BookCaterogy != null)
                                         {
-                                            if (bookCaterogy.idBook == item.idBook)
+                                            foreach (var bookCaterogy in ViewBag.BookCaterogy)
                                             {
-                                                if (bookCaterogy.idCaterogy == caterogy.idCaterogy)
+                                                if (ViewBag.Caterogy != null)
                                                 {
-                                                    @bookCaterogy.caterogy @(", ")
+                                                    foreach (var caterogy in ViewBag.Caterogy)
+                                                    {
+                                                        if (bookCaterogy.idBook == item.idBook)
+                                                        {
+                                                            if (bookCaterogy.idCaterogy == caterogy.idCaterogy)
+                                                            {
+                                                                @bookCaterogy.caterogy @(", ")
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                }
+                                    </td>
+                                    <td>@item.dateAdded</td>
+                                    <td>@item.status</td>
+                                    <td><img src="@item.img" style="height:50px; width:30px" /></td>
+                                    <td style="white-space: nowrap;">
+                                        <a href="~/Admin/EditBook/@item.idBook" class="btn btn-outline-primary" style="margin-right:10px">Sửa</a>
+                                        <a href="~/ReadOnline/UpdateChapter/@item.idBook" class="btn btn-outline-primary">Thêm chương</a>
+                                        <a href="#" class="btn btn-outline-primary">Xoá</a>
+                                    </td>
+                                </tr>
                             }
-                        </td>
-                        <td>@item.dateAdded</td>
-                        <td>@item.status</td>
-                        <td><a href="~/Admin/EditBook/@item.idBook" class="btn btn-outline-primary" style="margin-right:10px">Sửa</a><a href="#" class="btn btn-outline-primary">Xoá</a></td>
-                    </tr>
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

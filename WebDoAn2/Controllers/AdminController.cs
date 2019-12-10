@@ -18,12 +18,22 @@ namespace WebDoAn2.Controllers
         // GET: Admin
         public ActionResult AdminSite()
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Account = AccountAction.GetAll();
             return View();
         }
 
         public ActionResult BookList()
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Account = AccountAction.GetAll();
             ViewBag.Book = BookAction.GetAll();
             ViewBag.BookCaterogy = Book_CaterogyAction.GetAll();
@@ -34,6 +44,11 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult AddBook()
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Account = AccountAction.GetAll();
             ViewBag.Caterory = CaterogyAction.GetAll();
             ViewBag.Author = AuthorAction.GetAll();
@@ -89,6 +104,11 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult EditBook(int id)
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -157,6 +177,11 @@ namespace WebDoAn2.Controllers
 
         public ActionResult AuthorList()
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Account = AccountAction.GetAll();
             ViewBag.Author = AuthorAction.GetAll();
             return View();
@@ -165,6 +190,11 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult AddAuthor()
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Account = AccountAction.GetAll();
             return View();
         }
@@ -184,6 +214,11 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult EditAuthor(int id)
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -204,6 +239,11 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult CateroryList()
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Account = AccountAction.GetAll();
             ViewBag.Caterory = CaterogyAction.GetAll();
             return View();
@@ -231,6 +271,11 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult EditCaterogy(int id)
         {
+            if (Session["staff"] == null)
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

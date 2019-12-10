@@ -157,7 +157,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BorrowBookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReadOnlineController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -169,9 +171,12 @@
     <Compile Include="Models\BookAction.cs" />
     <Compile Include="Models\Book_Caterogy.cs" />
     <Compile Include="Models\Book_CaterogyAction.cs" />
+    <Compile Include="Models\Borrow_Book.cs" />
     <Compile Include="Models\Caterogy.cs" />
     <Compile Include="Models\CaterogyAction.cs" />
+    <Compile Include="Models\Chapter.cs" />
     <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\ReadOnline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +241,12 @@
     <Content Include="Views\Admin\EditCaterogy.cshtml" />
     <Content Include="Views\Home\CaterogiesList.cshtml" />
     <Content Include="Views\Home\BookList.cshtml" />
+    <Content Include="Views\Home\CaterogyBook.cshtml" />
+    <Content Include="Views\Account\EditAccount.cshtml" />
+    <Content Include="Views\BorrowBook\Index.cshtml" />
+    <Content Include="Views\ReadOnline\Index.cshtml" />
+    <Content Include="Views\ReadOnline\ReadChapter.cshtml" />
+    <Content Include="Views\ReadOnline\UpdateChapter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

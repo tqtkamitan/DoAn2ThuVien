@@ -1,0 +1,63 @@
+﻿@using WebDoAn2.Models
+@model List<Borrow_Book>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @if (Model == null || Model.Count == 0)
+    {
+        <p class="text-info text-center">
+            Bạn hiện không giữ cuốn sách nào
+        </p>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header text-white bg-dark">
+                Sãn sàng để mượn sách
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            @foreach (var book in ViewBag.Account)
+                            {
+                                if (Session["user"].Equals(book.email))
+                                {
+                                    <caption>Giỏ hàng của <a href="#">@book.email</a></caption>
+                                }
+                            }
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Mượn đến</th>
+                                <th></th>
+                            </tr>
+                            @foreach (Borrow_Book item in Model)
+                            {
+                                <tr>
+                                    <td><a target="_blank" href="@Url.Action("ViewBook", "Home", new { id = item.idborrow })"> @item.bookName </a> </td>
+                                    <td>
+                                        <form action="@Url.Action("SuaNgayTra")" method="get">
+                                            <input type="hidden" name="SanPhamID" value="@item.idborrow" />
+                                            <input type="datetime" min="1" step="1" name="ngayTraMoi" value="@item.until" />
+                                            <button type="submit" class="btn btn-primary btn-sm"> Cập nhật </button>
+                                        </form>
+                                    </td>
+
+                                    <td> <a href="@Url.Action("xoa", new { SanPhamID = item.idborrow })" onclick="return confirm('Bạn có chắc muốn xóa cuốn sách này?');" class="btn btn-danger btn-sm">Xóa</a> </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    }
+
+
+</div>
+

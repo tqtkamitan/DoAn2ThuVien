@@ -48,29 +48,7 @@ namespace WebDoAn2.Models
                 list_product = db.Books.ToList();
                 db.Dispose();
             }
-            return list_product;
-        }
-
-        public static List<Book> SachGioiThieu()
-        {
-            List<Book> list_product = null;
-            Random rnd = new Random();
-            int[] random = Enumerable
-                .Repeat<int>(0, 4)
-                .Select((x, i) => new { i = i, rand = rnd.Next() })
-                .OrderBy(x => x.rand)
-                .Select(x => x.i)
-                .ToArray();
-            using (var db = new DataContext())
-            {
-                var links = from l in db.Books
-                                from r in random// lấy toàn bộ liên kết
-                                where l.idBook.Equals(r)
-                                select l;
-                IQueryable<Book> q = links;
-                list_product = q.ToList();
-            }
-
+            list_product.Reverse();
             return list_product;
         }
 

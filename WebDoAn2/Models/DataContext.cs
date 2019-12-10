@@ -22,5 +22,8 @@ namespace WebDoAn2.Models
         public DbSet<Author> Authors { get; set; }
         public DbSet<Caterogy> Caterogies { get; set; }
         public DbSet<Book_Caterogy> Book_Caterogies { get; set; }
+        public DbSet<Borrow_Book> Borrow_Books { get; set; }
+        public DbSet<Chapter> Chapters { get; set; }
+        public DbSet<ReadOnline> ReadOnlines { get; set; }
     }
 }
