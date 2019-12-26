@@ -4,5 +4,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ReadChapter</h2>
+<div>
+    <div class="container">
+        <form>
+            <div class="form-group row d-flex justify-content-center">
+                <label for="exampleInputEmail1" class="col-md-12 text-center" style="margin-top:20px">Chương:</label>
+                <select class="custom-select w-50" id="chapter" name="chapter">
+                    @if (ViewBag.Book != null)
+                    {
+                        int chapter = 0;
+                        foreach (var item in ViewBag.Book)
+                        {
+                            if (item.idChapter != chapter)
+                            {
+                                <option>@item.idChapter @item.chapterName</option>
+                                chapter = item.idChapter;
+                            }
+                        }
+                    }
+                </select>
+                <div class="col-md-12 d-flex justify-content-center">
+                    @if (ViewBag.Book != null)
+                    {
+                        int chapter = 0;
+                        foreach (var item in ViewBag.Book)
+                        {
+                            if (item.idChapter != chapter)
+                            {
+                                int prevousChapter = 0;
+                                if ((item.idChapter) != 1)
+                                {
+                                    prevousChapter = (item.idChapter) - 1;
+                                }
+                                int nextChapter = (item.idChapter) + 1;
+                                if ((item.idChapter) != 1)
+                                {
+                                    <a href="@Url.Action("ReadChapter", "ReadOnline", new { idBook = item.idBook, idChapter = prevousChapter})"><i class="material-icons">navigate_before</i></a>
+                                }
+                                <a href="@Url.Action("ReadChapter", "ReadOnline", new { idBook = item.idBook, idChapter = nextChapter})"><i class="material-icons">navigate_next</i></a>
+                                chapter = item.idChapter;
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+    @if (ViewBag.Book != null)
+    {
+        int chapter = 0;
+        foreach (var item in ViewBag.Book)
+        {
+            if (item.idChapter != chapter)
+            {
+                <div class="col-md-12 d-flex justify-content-center">
+                    <img class="" src="@item.fileChapter" />
+                </div>
+            }
+        }
+    }
+    @if (Enumerable.Count(ViewBag.Book) == 0)
+    {
+        <div class="col-md-12 d-flex justify-content-center">
+            <h3>Không có chương mới cho cuốn sách này <a href="~/Home/Index">Quay lại trang chủ</a></h3>
+        </div>
+    }
+</div>
 

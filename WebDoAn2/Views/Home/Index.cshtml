@@ -102,9 +102,12 @@
                     {
                         <div class="col-md-12">Hiện không có tác giả nào</div>
                     }
-                    <div class="col-md-12">Số sách đang cho mượn: </div>
-                    <div class="col-md-12">Số sách đã được in ấn lại:</div>
-                </div>
+                    @if (@ViewBag.Borrow != null && Session["user"] != null)
+                    {
+                        <div class="col-md-12">Số sách đang cho mượn: @ViewBag.Borrow.Count</div>
+                    }
+                        <div class="col-md-12">Số sách đã được in ấn lại:</div>
+                    </div>
             </div>
             <div class="card">
                 <div class="card-header text-white bg-dark">
@@ -112,7 +115,7 @@
                 </div>
                 <div class="card-body row">
                     <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="#"><i class="material-icons" style="float:unset">face</i><br />Thông tin độc giả</a></span>
-                    <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="#"><i class="material-icons" style="float:unset">card_membership</i><br />Đăng ký mở thẻ</a></span>
+                    <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="~/Admin/DangKyTheThuVien"><i class="material-icons" style="float:unset">card_membership</i><br />Đăng ký mở thẻ</a></span>
                     <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="#"><i class="material-icons" style="float:unset">add_comment</i><br />Yêu cầu bổ sung</a></span>
                     <span class="col-md-6 p-0"><a class="btn btn-outline-info text-info w-100" href="#"><i class="material-icons" style="float:unset">360</i><br />Gia hạn mượn sách</a></span>
                 </div>

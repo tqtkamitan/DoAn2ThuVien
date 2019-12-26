@@ -18,7 +18,9 @@ namespace WebDoAn2.Controllers
         // GET: Admin
         public ActionResult AdminSite()
         {
-            if (Session["staff"] == null)
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -29,7 +31,9 @@ namespace WebDoAn2.Controllers
 
         public ActionResult BookList()
         {
-            if (Session["staff"] == null)
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -44,7 +48,9 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult AddBook()
         {
-            if (Session["staff"] == null)
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -104,7 +110,9 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult EditBook(int id)
         {
-            if (Session["staff"] == null)
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -177,7 +185,9 @@ namespace WebDoAn2.Controllers
 
         public ActionResult AuthorList()
         {
-            if (Session["staff"] == null)
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -190,7 +200,9 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult AddAuthor()
         {
-            if (Session["staff"] == null)
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -214,7 +226,9 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult EditAuthor(int id)
         {
-            if (Session["staff"] == null)
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -239,7 +253,9 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult CateroryList()
         {
-            if (Session["staff"] == null)
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -252,6 +268,7 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult AddCaterory()
         {
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
             ViewBag.Account = AccountAction.GetAll();
             return View();
         }
@@ -271,7 +288,10 @@ namespace WebDoAn2.Controllers
         [HttpGet]
         public ActionResult EditCaterogy(int id)
         {
-            if (Session["staff"] == null)
+            ViewBag.Account = AccountAction.GetAll();
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -283,6 +303,72 @@ namespace WebDoAn2.Controllers
         public ActionResult EditCaterogy()
         {
             return Redirect("~/Admin/CateroryList");
+        }
+
+        public ActionResult DangKyTheThuVien()
+        {
+            ViewBag.Account = AccountAction.GetAll();
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            List<libraryCard> check = libraryCard.GetAll();
+            for (int i = 0; i < check.Count; i++)
+            {
+                if (check[i].email == account.email)
+                {
+                    TempData["Alert"] = "Bạn đã có thẻ thư viện";
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            libraryCard paycheck = new libraryCard
+            {
+                email = account.email,
+                name = account.name,
+                libraryCardName = account.phoneNumber.Substring(account.phoneNumber.Length -3) + account.name.Substring(account.name.Length - 3),
+                Active = false,
+            };
+            db.libraryCards.Add(paycheck);
+            db.SaveChanges();
+            account.libraryCardId = paycheck.libraryCardId;
+            db.Entry(account).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return View();
+        }
+
+        public ActionResult TheThuVienList()
+        {
+            ViewBag.Account = AccountAction.GetAll();
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.LibraryCard = libraryCard.GetAll();
+            return View();
+        }
+
+        public ActionResult TheThuVienCanActive()
+        {
+            ViewBag.Account = AccountAction.GetAll();
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.LibraryCard = libraryCard.GetAll();
+            return View();
+        }
+
+        public ActionResult KichHoatTheThuVien(int id)
+        {
+            libraryCard libraryCard = db.libraryCards.SingleOrDefault(m => m.libraryCardId == id);
+            libraryCard.Active = true;
+            db.Entry(libraryCard).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("TheThuVienList", "Admin");
         }
     }
 }

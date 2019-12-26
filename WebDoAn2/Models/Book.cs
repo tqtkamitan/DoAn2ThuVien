@@ -17,6 +17,8 @@ namespace WebDoAn2.Models
         public string bookName { get; set; }
         public string author { get; set; }
         public string description { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        [DataType(DataType.Date)]
         public string dateAdded { get; set; }
         public string img { get; set; }
         [Required]

@@ -176,6 +176,7 @@
     <Compile Include="Models\CaterogyAction.cs" />
     <Compile Include="Models\Chapter.cs" />
     <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\libraryCard.cs" />
     <Compile Include="Models\ReadOnline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -247,6 +248,13 @@
     <Content Include="Views\ReadOnline\Index.cshtml" />
     <Content Include="Views\ReadOnline\ReadChapter.cshtml" />
     <Content Include="Views\ReadOnline\UpdateChapter.cshtml" />
+    <Content Include="Views\BorrowBook\SachDangMuon.cshtml" />
+    <Content Include="Views\BorrowBook\TinhTrangMuonSach.cshtml" />
+    <Content Include="Views\Account\UserDetail.cshtml" />
+    <Content Include="Views\Account\EditUserInfo.cshtml" />
+    <Content Include="Views\Admin\DangKyTheThuVien.cshtml" />
+    <Content Include="Views\Admin\TheThuVienList.cshtml" />
+    <Content Include="Views\Admin\TheThuVienCanActive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

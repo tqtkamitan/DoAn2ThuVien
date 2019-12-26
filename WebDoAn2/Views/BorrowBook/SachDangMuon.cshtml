@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "SachDangMuon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mx-auto w-md-50">
+    <div class="card">
+        <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+            Các cuốn sách bạn đã mượn
+        </div>
+        <div class="card-body">
+            <table class="table text-center" style="table-layout:fixed;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Tên sách</th>
+                        <th scope="col">Mượn đến</th>
+                        <th scope="col">Tình trạng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.HoaDon != null)
+                    {
+                        foreach (var item in ViewBag.HoaDon)
+                        {
+                            if (item.user == Session["user"].ToString())
+                            {
+                    <tr>
+                        <td>@item.bookName</td>
+                        <td>@item.until.ToString("dd/MM/yyyy")</td>
+                        @if (item.borrow == "Chờ được mượn")
+                        {
+                            <td><a class="btn btn-success" href="#">@item.borrow</a></td>
+                        }
+                        else if (item.borrow == "Đã trả")
+                        {
+                            <td><a class="btn btn-info" href="#">@item.borrow</a></td>
+                        }
+                        else
+                        {
+                            <td><a class="btn btn-danger" href="#">@item.borrow</a></td>
+                        }
+                    </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

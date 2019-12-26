@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "TheThuVienList";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container mx-auto">
+    <div class="card">
+        <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+            Danh sách các thẻ thư viện
+        </div>
+        <div class="card-body">
+            <div class="" style="margin-bottom:50px">
+                <a class="float-right btn btn-primary" href="~/Admin/TheThuVienCanActive">Lọc các thẻ cần kích hoạt</a>
+            </div>
+
+            <table class="table text-center" style="table-layout:fixed;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Mã thẻ</th>
+                        <th scope="col">Tài khoản</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">Kích hoạt</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.LibraryCard != null)
+                    {
+                        foreach (var item in ViewBag.LibraryCard)
+                        {
+                    <tr>
+                        <td>@item.libraryCardId</td>
+                        <td>@item.libraryCardName</td>
+                        <td>@item.email</td>
+                        <td>@item.name</td>
+                        <td>@item.Active</td>
+                        @if (item.Active == false)
+	                    {
+                        <td><a href="~/Admin/KichHoatTheThuVien/@item.libraryCardId" class="btn btn-outline-primary" style="margin-right:10px">Kích hoạt</a></td>
+	                    }   
+                        else {
+                        <td><a href="#" class="btn btn-outline-primary disabled" style="margin-right:10px">Kích hoạt</a></td>
+                        }
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

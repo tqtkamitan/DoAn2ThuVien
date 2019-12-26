@@ -4,5 +4,42 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+                Danh sách các chương
+            </div>
+            <div class="card-body">
+                <div style="overflow:auto;">
+                    <table class="table text-center" style="table-layout:fixed;">
+                        <thead class="thead bg-dark text-light">
+                            <tr>
+                                <td scope="col">Tên chương</td>
+                                <td scope="col">Ngày thêm</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Book != null)
+                            {
+                                int chapter = 0;
+                                foreach (var item in ViewBag.Book)
+                                {
+                                    if (item.idChapter != chapter)
+                                    {
+                                        <tr>
+                                            <td><a href="@Url.Action("ReadChapter", "ReadOnline", new { idBook = item.idBook, idChapter = @item.idChapter})">@item.idChapter @item.chapterName</a></td>
+                                            <td>@item.dateAdded.ToString("d")</td>
+                                        </tr>
+                                        chapter = item.idChapter;
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

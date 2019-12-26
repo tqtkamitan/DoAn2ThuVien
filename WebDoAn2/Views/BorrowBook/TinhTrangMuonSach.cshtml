@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "TinhTrangMuonSach";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container mx-auto">
+    <div class="card">
+        <div class="card-header bg-primary text-light text-center" style="font-size:25px">
+            Tình trạng các cuốn sách đã cho mượn
+        </div>
+        <div class="card-body">
+            <a class="btn btn-info" href="#">Lọc các cuốn sách chưa giao</a>
+            <a class="btn btn-info" href="#">Lọc các cuốn sách chưa trả</a>
+            <a class="btn btn-info" href="#">Lọc các cuốn sách đến hạng mà chưa trả</a>
+            <table class="table text-center" style="table-layout:fixed;">
+                <thead class="thead-dark" style="white-space:nowrap;">
+                    <tr>
+                        <th scope="col">Tài khoản</th>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Ngày trả</th>
+                        <th scope="col">Tình trạng</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody style="white-space:nowrap;">
+                    @if (ViewBag.HoaDon != null)
+                    {
+                        foreach (var item in ViewBag.HoaDon)
+                        {
+                            <tr>
+                                <td>@item.user</td>
+                                <td>@item.bookName</td>
+                                <td>@item.until.ToString("dd/MM/yyyy")</td>
+                                <td>@item.borrow</td>
+                                @if (item.borrow == "Chờ được mượn")
+                                {
+                                    <td><a class="btn btn-success" href="~/BorrowBook/GiaoSach/@item.idborrow">Đã giao sách</a></td>
+                                }
+                                else if (item.borrow == "Đã trả")
+                                {
+                                    <td><a class="btn btn-info" href="#">@item.borrow</a></td>
+                                }
+                                else
+                                {
+                                    <td><a class="btn btn-danger" href="~/BorrowBook/TraSach/@item.idborrow">Đã trả</a></td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

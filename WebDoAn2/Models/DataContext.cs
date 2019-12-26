@@ -25,5 +25,6 @@ namespace WebDoAn2.Models
         public DbSet<Borrow_Book> Borrow_Books { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<ReadOnline> ReadOnlines { get; set; }
+        public DbSet<libraryCard> libraryCards { get; set; }
     }
 }

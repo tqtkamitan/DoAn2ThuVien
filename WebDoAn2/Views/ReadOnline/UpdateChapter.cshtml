@@ -8,12 +8,17 @@
     <div class="row" style="display:block">
         <div class="card text-center">
             <div class="card-header bg-primary text-light">
-                Cập nhật thêm chương mới cho sách
+                Cập nhật thêm chương mới cho sách @ViewBag.Book.bookName
             </div>
             <div class="card-body">
-                <form action="">
+                <form action="~/ReadOnline/UpdateChapter/@ViewBag.Book.idBook" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="@ViewBag.Book.bookName" name="bookName"/>
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="col-md-12">Tên chương</label>
+                        <label for="exampleInputEmail1" class="col-md-12">Mã chương</label>
+                        <input type="number" class="form-control col-md-12" id="" name="idChapter" aria-describedby="emailHelp" placeholder="Enter your chapter id here.">
+                        <small id="emailHelp" class="form-text text-muted col-md-12">số chương</small>
+
+                        <label for="exampleInputEmail1" class="col-md-12" style="margin-top:20px">Tên chương</label>
                         <input type="text" class="form-control col-md-12" id="" name="chapter" aria-describedby="emailHelp" placeholder="Enter your chapter here.">
                         <small id="emailHelp" class="form-text text-muted col-md-12">Số tập, số chương và tên chương</small>
 
@@ -22,13 +27,10 @@
                         <small id="emailHelp" class="form-text text-muted col-md-12">chỉ các file: pdf, png, jpg, ...</small>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="~/Admin/BookList" class="btn btn-outline-primary" style="margin-left:10px">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Thêm mới</button>
+                        <a href="~/Admin/BookList" class="btn btn-outline-primary" style="margin-left:10px">Trở về</a>
                     </div>
                 </form>
-            </div>
-            <div class="card-footer">
-                <a href="~/Admin/BookList">Trở về danh sách các cuốn sách trong thư viện</a>
             </div>
         </div>
     </div>

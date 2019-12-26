@@ -41,7 +41,7 @@
                                     <td>
                                         <form action="@Url.Action("SuaNgayTra")" method="get">
                                             <input type="hidden" name="SanPhamID" value="@item.idborrow" />
-                                            <input type="datetime" min="1" step="1" name="ngayTraMoi" value="@item.until" />
+                                            <input type="date" name="ngayTraMoi" value="@item.until.ToString("yyyy-M-dd")" />
                                             <button type="submit" class="btn btn-primary btn-sm"> Cập nhật </button>
                                         </form>
                                     </td>
@@ -49,6 +49,12 @@
                                     <td> <a href="@Url.Action("xoa", new { SanPhamID = item.idborrow })" onclick="return confirm('Bạn có chắc muốn xóa cuốn sách này?');" class="btn btn-danger btn-sm">Xóa</a> </td>
                                 </tr>
                             }
+                            <tr>
+                                <td></td>
+                                <td class="text-right">Tổng số lượng:</td>
+                                <td> @Model.Count() </td>
+                                <td><a href="/BorrowBook/MuonSach"><input value="Mượn" type="submit" class="btn-primary" /></a></td>
+                            </tr>
                         </table>
                     </div>
 

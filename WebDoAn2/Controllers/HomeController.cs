@@ -26,6 +26,10 @@ namespace WebDoAn2.Controllers
             var randomBooks = db.Books.OrderBy(x => Guid.NewGuid()).Take(6);
             ViewBag.Book = randomBooks;
             ViewBag.BookNew = BookAction.GetAll();
+            if (Session["user"] != null)
+            {
+                ViewBag.Borrow = Borrow_Book.GetYour(Session["user"].ToString());
+            }
             return View();
         }
 

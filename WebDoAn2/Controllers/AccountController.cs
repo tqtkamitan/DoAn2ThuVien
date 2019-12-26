@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebDoAn2.Models;
+using System.Net;
+using System.IO;
 
 namespace WebDoAn2.Controllers
 {
@@ -16,7 +18,8 @@ namespace WebDoAn2.Controllers
         {
             if (db.Accounts.Find("tqt.kamitan@gmail.com") == null)
             {
-                db.Accounts.Add(new Account { email = "tqt.kamitan@gmail.com", name = "Quang Tân", password = "kirito1998", role = "Nhân viên", img = "/UploadedFiles/anonymous-profile.jpg", phoneNumber = "0984081735", status = "Active" });
+                db.libraryCards.Add(new libraryCard { libraryCardName = "1101", email = "tqt.kamitan@gmail.com" , name = "Quang Tân", Active = true });
+                db.Accounts.Add(new Account { email = "tqt.kamitan@gmail.com", name = "Quang Tân", password = "kirito1998", role = "Nhân viên", img = "/UploadedFiles/anonymous-profile.jpg", phoneNumber = "0984081735", status = true, libraryCardId = 1});
                 db.SaveChanges();
             }
             ViewBag.Account = AccountAction.GetAll();
@@ -31,14 +34,9 @@ namespace WebDoAn2.Controllers
                 {
                     string taikhoan = user.email;
                     string matkhau = user.password;
-                    //string AccStyle = user.status;
                     if (email.Equals(taikhoan) && password.Equals(matkhau))
                     {
                         Session.Add("user", user.email);
-                        if (user.role == "Nhân viên")
-                        {
-                            Session.Add("staff", user.role);
-                        }
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -90,8 +88,14 @@ namespace WebDoAn2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult LamTheThuVien()
+        {
+            return View();
+        }
+
         public ActionResult EmployeeList() {
-            if (Session["staff"] == null)
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -103,7 +107,8 @@ namespace WebDoAn2.Controllers
 
         public ActionResult AccountList()
         {
-            if (Session["staff"] == null)
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -112,15 +117,68 @@ namespace WebDoAn2.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult EditAccount(int id)
+        public ActionResult UserDetail()
         {
+            if (Session["user"] == null) return RedirectToAction("Index", "Home");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            ViewBag.User = account;
+            ViewBag.Account = AccountAction.GetAll();
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult EditUserInfo()
+        {
+            if (Session["user"] == null) return RedirectToAction("Index", "Home");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            ViewBag.User = account;
+            ViewBag.Account = AccountAction.GetAll();
             return View();
         }
 
         [HttpPost]
-        public ActionResult EditAccount(int id, string name)
+        public ActionResult EditUserInfo(string name, string phoneNumber, string address, string email, string password, string password2, HttpPostedFileBase img)
         {
+            if (Session["user"] == null) return RedirectToAction("Index", "Home");
+            using (var db = new DataContext())
+            {
+                Account user = db.Accounts.Find(email);
+                if (user != null)
+                {
+                    ViewBag.Noti = "<h3 class='text-danger'>Email này đã được đăng kí</h3>";
+                    return View();
+                }
+                if (!email.Contains("@"))
+                {
+                    ViewBag.Noti = "<h3 class='text-danger'>Xin hãy nhập email</h3>";
+                    return View();
+                }
+                if (password != password2)
+                {
+                    ViewBag.Noti = "<h3 class='text-danger'>Password nhập lại phải trùng Password nhập ban đầu</h3>";
+                    return View();
+                }
+                if (password.Length <= 8)
+                {
+                    ViewBag.Noti = "<h3 class='text-danger'>Password phải từ 8 ký tự trở lên</h3>";
+                    return View();
+                }
+            }
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            string _path = "";
+            if (img == null)
+            {
+                var book = db.Accounts.Find(email);
+                string _FileName = book.img;
+                AccountAction.EditAccount(email, name, phoneNumber, address, _FileName, password);
+            }
+            else
+            {
+                string _FileName = Path.GetFileName(img.FileName);
+                _path = Path.Combine(Server.MapPath("/UploadedFiles"), _FileName);
+                img.SaveAs(_path);
+                AccountAction.EditAccount(email, name, phoneNumber, address, "/UploadedFiles/" + _FileName, password);
+            }
             return View();
         }
     }

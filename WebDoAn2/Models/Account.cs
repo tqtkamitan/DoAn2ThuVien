@@ -23,6 +23,7 @@ namespace WebDoAn2.Models
         [Required]
         public string role { get; set; }
         [Required]
-        public string status { get; set; }
+        public bool status { get; set; }
+        public int libraryCardId { get; set; }
     }
 }

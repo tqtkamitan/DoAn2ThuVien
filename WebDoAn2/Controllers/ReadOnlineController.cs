@@ -15,12 +15,15 @@ namespace WebDoAn2.Controllers
         // GET: ReadOnline
         public ActionResult Index(int id)
         {
+            ViewBag.Account = AccountAction.GetAll();
+            ViewBag.Book = ReadOnline.getAllBookChapter(id);
             return View();
         }
 
         public ActionResult UpdateChapter(int id)
         {
-            if (Session["staff"] == null)
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
             {
                 TempData["Alert"] = "Bạn không có quyền vào trang";
                 return RedirectToAction("Index", "Home");
@@ -33,30 +36,45 @@ namespace WebDoAn2.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateChapter(int id, string chapter, HttpPostedFileBase file)
+        public ActionResult UpdateChapter(int id, string bookName, int idChapter, string chapter, HttpPostedFileBase[] file)
         {
-            if (id == 0)
+            for (int i = 0; i < file.Length; i++)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ViewBag.Account = AccountAction.GetAll();
-            if (chapter == "")
-            {
-                ViewBag.Noti = "<h3 class='text-danger'>Hãy nhập tên chương</h3>";
+                string _path = "";
+                if (id == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
                 ViewBag.Account = AccountAction.GetAll();
-                return View();
+                if (chapter == "")
+                {
+                    ViewBag.Noti = "<h3 class='text-danger'>Hãy nhập tên chương</h3>";
+                    ViewBag.Account = AccountAction.GetAll();
+                    return View();
+                }
+                else if (file[i] == null)
+                {
+                    ViewBag.Noti = "<h3 class='text-danger'>Hãy chọn file để người dùng đọc</h3>";
+                    ViewBag.Account = AccountAction.GetAll();
+                    return View();
+                }
+                else
+                {
+                    string _FileName = Path.GetFileName(file[i].FileName);
+                    _path = Path.Combine(Server.MapPath("/UploadedFiles"), _FileName);
+                    file[i].SaveAs(_path);
+                    ReadOnline.updateChapter(id, bookName, idChapter, chapter, "/UploadedFiles/" + _FileName);
+                }
             }
-            else if (file == null)
-            {
-                ViewBag.Noti = "<h3 class='text-danger'>Hãy chọn file để người dùng đọc</h3>";
-                ViewBag.Account = AccountAction.GetAll();
-                return View();
-            }
-            return View();
+            return Redirect("~/Admin/BookList");
         }
 
-        public ActionResult ReadChapter(int id)
+        public ActionResult ReadChapter([Bind(Include = "idBook, idChapter")]ReadOnline readOnline)
         {
+            ViewBag.Account = AccountAction.GetAll();
+            int idBook = readOnline.idBook;
+            int idChapter = readOnline.idChapter;
+            ViewBag.Book = ReadOnline.getChapterFile(idBook, idChapter);
             return View();
         }
     }
