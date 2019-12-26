@@ -33,6 +33,33 @@ namespace WebDoAn2.Controllers
             return View();
         }
 
+        public ActionResult Search(string searchString)
+        {
+            ViewBag.Account = AccountAction.GetAll();
+            db.SaveChanges();
+            if (searchString != "")
+            {
+                var links = from l in db.Books // lấy toàn bộ liên kết
+                            where l.bookName.Contains(searchString) || l.author.Contains(searchString)
+                            select l;
+                List<Book> chapter_list = links.ToList();
+                ViewBag.BookCaterogy = Book_CaterogyAction.GetAll();
+                ViewBag.Caterogy = CaterogyAction.GetAll();
+                ViewBag.Book = chapter_list;
+                return View();
+            }
+            else
+            {
+                var link = from l in db.Books
+                           select l;
+                List<Book> chapter_list = link.ToList();
+                ViewBag.BookCaterogy = Book_CaterogyAction.GetAll();
+                ViewBag.Caterogy = CaterogyAction.GetAll();
+                ViewBag.Book = chapter_list;
+                return View();
+            }
+        }
+
         public ActionResult BookList()
         {
             ViewBag.Account = AccountAction.GetAll();
@@ -86,7 +113,7 @@ namespace WebDoAn2.Controllers
             ViewBag.Book = BookAction.GetAll();
             ViewBag.BookCaterogy = Book_CaterogyAction.GetAll();
             ViewBag.Caterogy = CaterogyAction.GetAll();
-            var randomBooks = db.Books.OrderBy(x => Guid.NewGuid()).Take(6);
+            var randomBooks = db.Books.OrderBy(x => Guid.NewGuid()).Take(4);
             ViewBag.randomBooks = randomBooks;
             var book = db.Books.Find(id);
             if (book == null)

@@ -11,40 +11,40 @@
                 <div class="card-header bg-primary text-light text-center" style="font-size:25px">
                     Thông tin sách
                 </div>
-                    <div class="row no-gutters">
-                        <div class="col-md-5 p-1">
-                                <img alt="@Model.bookName" class="card-img" src="@Model.img" style="width: 270px; height: 300px;" />
-                        </div>
-                        <div class="col-md-7 row">
-                            <div class="card-body">
-                                <p class="card-text">Tên sách:  @Html.DisplayFor(model => model.bookName)</p>
-                                <p class="card-text">Ngày thêm:  @Html.DisplayFor(model => model.dateAdded)</p>
-                                <p class="card-text">Tác giả:  @Html.DisplayFor(model => model.author)</p>
-                                <p class="card-text">
-                                    Thể loại:  @if (ViewBag.BookCaterogy != null)
+                <div class="row no-gutters">
+                    <div class="col-md-5 p-1">
+                        <img alt="@Model.bookName" class="card-img" src="@Model.img" style="width: 270px; height: 300px;max-width: 100%;" />
+                    </div>
+                    <div class="col-md-7 row">
+                        <div class="card-body">
+                            <p class="card-text">Tên sách:  @Html.DisplayFor(model => model.bookName)</p>
+                            <p class="card-text">Ngày thêm:  @Html.DisplayFor(model => model.dateAdded)</p>
+                            <p class="card-text">Tác giả:  @Html.DisplayFor(model => model.author)</p>
+                            <p class="card-text">
+                                Thể loại:  @if (ViewBag.BookCaterogy != null)
+                                {
+                                    foreach (var bookCaterogy in ViewBag.BookCaterogy)
                                     {
-                                        foreach (var bookCaterogy in ViewBag.BookCaterogy)
+                                        if (ViewBag.BookCaterogy != null)
                                         {
-                                            if (ViewBag.BookCaterogy != null)
+                                            foreach (var caterogy in ViewBag.Caterogy)
                                             {
-                                                foreach (var caterogy in ViewBag.Caterogy)
+                                                if (bookCaterogy.idBook == Model.idBook)
                                                 {
-                                                    if (bookCaterogy.idBook == Model.idBook)
+                                                    if (bookCaterogy.idCaterogy == caterogy.idCaterogy)
                                                     {
-                                                        if (bookCaterogy.idCaterogy == caterogy.idCaterogy)
-                                                        {
-                                                            @bookCaterogy.caterogy @(", ")
-                                                        }
+                                                        @bookCaterogy.caterogy @(", ")
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                </p>
-                                <p class="card-text">Tình trạng: @Html.DisplayFor(model => model.status)</p>
-                                <p class="card-text">Mô tả: @Html.DisplayFor(model => model.description)</p>
-                            </div>
+                                }
+                            </p>
+                            <p class="card-text">Tình trạng: @Html.DisplayFor(model => model.status)</p>
                         </div>
+                    </div>
+                    <p class="card-text">Mô tả: @Html.DisplayFor(model => model.description)</p>
                 </div>
                 <div class="card-footer">
                     <div class="row">
@@ -62,14 +62,14 @@
                     Giới thiệu cho bạn
                 </div>
                 <div class="card-body">
-                    @if (ViewBag.Book != null)
+                    @if (ViewBag.randomBooks != null)
                     {
                         <ul style="list-style: none;">
-                            @foreach (var item in ViewBag.Book)
+                            @foreach (var item in ViewBag.randomBooks)
                             {
-                                <li>
-                                    <a href="~/Home/ViewBook/@item.idBook" class="row">
-                                        <img src="@item.img" class="col-md-5 p-1" alt="...">
+                                <li class="border-bottom">
+                                    <a href="~/Home/ViewBook/@item.idBook" class="row text-dark">
+                                        <img style="height:150px; width:100px" src="@item.img" class="col-md-5 p-1" alt="...">
                                         <div class="col-md-7 text-center">
                                             <p class="card-text">@item.bookName</p>
                                             <p class="card-text">Tác giả: @item.author</p>

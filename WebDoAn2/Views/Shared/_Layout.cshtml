@@ -58,8 +58,8 @@
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0 float-right d-flex align-items-center border-left p-3">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0 float-right d-flex align-items-center border-left p-3" action="~/Home/Search">
+                <input class="form-control mr-sm-2" name="searchString" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-info my-2 my-sm-0" type="submit"><i class="material-icons">search</i></button>
             </form>
             @if (Session["user"] == null)
@@ -74,22 +74,22 @@
                 {
                     if (Session["user"].Equals(user.email))
                     {
-                    <div class="my-2 my-lg-0 nav-item dropdown border-left float-right">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-circle" src="@user.img" id="logo-header" style="border-radius: 50%;margin-right:5px" />Xin chào @user.name
-                        </a>
-                        <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="~/Admin/AdminSite">Admin Site</a>
-                            <a class="dropdown-item" href="~/BorrowBook/SachDangMuon">
-                                Tình trạng mượn sách
+                        <div class="my-2 my-lg-0 nav-item dropdown border-left float-right">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="img-circle" src="@user.img" id="logo-header" style="border-radius: 50%;margin-right:5px" />Xin chào @user.name
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="~/BorrowBook/Index">
-                                Sách đang chờ xử lý
-                            </a>
-                            <a class="dropdown-item" href="~/Account/Logout">Đăng xuất</a>
+                            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="~/Admin/AdminSite">Admin Site</a>
+                                <a class="dropdown-item" href="~/BorrowBook/SachDangMuon">
+                                    Tình trạng mượn sách
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="~/BorrowBook/Index">
+                                    Sách đang chờ xử lý
+                                </a>
+                                <a class="dropdown-item" href="~/Account/Logout">Đăng xuất</a>
+                            </div>
                         </div>
-                    </div>
                     }
                 }
             }

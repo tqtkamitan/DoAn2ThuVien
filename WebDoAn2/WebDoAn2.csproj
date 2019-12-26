@@ -255,6 +255,10 @@
     <Content Include="Views\Admin\DangKyTheThuVien.cshtml" />
     <Content Include="Views\Admin\TheThuVienList.cshtml" />
     <Content Include="Views\Admin\TheThuVienCanActive.cshtml" />
+    <Content Include="Views\BorrowBook\LocSachChuaGiao.cshtml" />
+    <Content Include="Views\BorrowBook\LocSachChuaTra.cshtml" />
+    <Content Include="Views\BorrowBook\LocSachDenHangChuaTra.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

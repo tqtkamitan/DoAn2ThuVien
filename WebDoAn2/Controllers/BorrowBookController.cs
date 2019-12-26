@@ -181,5 +181,59 @@ namespace WebDoAn2.Controllers
             ViewBag.HoaDon = Borrow_Book.GetAll();
             return View();
         }
+
+        public ActionResult LocSachChuaGiao()
+        {
+            ViewBag.Account = AccountAction.GetAll();
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
+            var links = from l in db.Borrow_Books // lấy toàn bộ liên kết
+                        where l.borrow.Equals("Đã giao") where l.until < DateTime.Now
+                        select l;
+            List<Borrow_Book> borrow_Books = links.ToList();
+            ViewBag.HoaDon = borrow_Books;
+            return View();
+        }
+
+        public ActionResult LocSachChuaTra()
+        {
+            ViewBag.Account = AccountAction.GetAll();
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
+            var links = from l in db.Borrow_Books // lấy toàn bộ liên kết
+                        where l.borrow.Equals("Đã giao")
+                        select l;
+            List<Borrow_Book> borrow_Books = links.ToList();
+            ViewBag.HoaDon = borrow_Books;
+            return View();
+        }
+
+        public ActionResult LocSachDenHangChuaTra()
+        {
+            ViewBag.Account = AccountAction.GetAll();
+            if (Session["user"] == null) return RedirectToAction("Login", "Account");
+            Account account = db.Accounts.Find(Session["user"].ToString());
+            if (account.role != "Nhân viên")
+            {
+                TempData["Alert"] = "Bạn không có quyền vào trang";
+                return RedirectToAction("Index", "Home");
+            }
+            var links = from l in db.Borrow_Books // lấy toàn bộ liên kết
+                        where l.borrow.Equals("Chờ được mượn")
+                        select l;
+            List<Borrow_Book> borrow_Books = links.ToList();
+            ViewBag.HoaDon = borrow_Books;
+            return View();
+        }
     }
 }
