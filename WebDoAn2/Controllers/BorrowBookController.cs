@@ -35,6 +35,11 @@ namespace WebDoAn2.Controllers
             if (giohang.FirstOrDefault(m => m.idborrow == SanPhamID) == null)
             {
                 Book sp = db.Books.Find(SanPhamID);
+                if (sp.status == "Hết sách" || sp.status == "")
+                {
+                    TempData["Alert"] = "Cuốn sách này hiện không thể mượn nữa!";
+                    return RedirectToAction("Index", "Home");
+                }
                 string user = Session["user"].ToString();
                 //
                 Borrow_Book newItem = null;
@@ -97,7 +102,7 @@ namespace WebDoAn2.Controllers
                     count++;
                 }
             }
-            if (count < check.Count)
+            if (count == 0)
             {
                 TempData["Alert"] = "Bạn cần phải làm thẻ thư viện trước khi mượn sách!";
                 Session["borrow"] = null;
@@ -193,7 +198,7 @@ namespace WebDoAn2.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var links = from l in db.Borrow_Books // lấy toàn bộ liên kết
-                        where l.borrow.Equals("Đã giao") where l.until < DateTime.Now
+                        where l.borrow.Equals("Chờ được mượn") where l.until < DateTime.Now
                         select l;
             List<Borrow_Book> borrow_Books = links.ToList();
             ViewBag.HoaDon = borrow_Books;
@@ -229,7 +234,7 @@ namespace WebDoAn2.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var links = from l in db.Borrow_Books // lấy toàn bộ liên kết
-                        where l.borrow.Equals("Chờ được mượn")
+                        where l.borrow.Equals("Đã giao") where l.until <DateTime.Now
                         select l;
             List<Borrow_Book> borrow_Books = links.ToList();
             ViewBag.HoaDon = borrow_Books;

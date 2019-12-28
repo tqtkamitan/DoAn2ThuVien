@@ -73,7 +73,7 @@ namespace WebDoAn2.Models
                 book.description = description;
                 book.img = img;
                 book.dateAdded = dateAdded.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-                book.status = "Mới";
+                book.status = status;
                 db.Entry(book).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 bool hadUpdated = false;
